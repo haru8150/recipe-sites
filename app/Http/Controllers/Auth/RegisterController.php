@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Storage;//追記
 
 class RegisterController extends Controller
 {
@@ -51,6 +52,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'user_image_url' => 'required|file|image',
         ]);
     }
 
@@ -62,10 +64,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //s3アップロード開始
+        $user_image_url = $data['user_image_url'];
+        
+        // バケットへアップロード
+        $path = Storage::disk('s3')->putfile('recipe-sites',$user_image_url, 'public');
+        
+        // アップロードした画像のフルパスを取得
+        $url = Storage::disk('s3')->url($path);
+                
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'user_image_url' => $url,
         ]);
     }
 }

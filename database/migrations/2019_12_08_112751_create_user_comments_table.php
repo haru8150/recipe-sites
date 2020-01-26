@@ -17,7 +17,7 @@ class CreateUserCommentsTable extends Migration
             $table->increments('id');
             $table->integer('recipe_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
-            $table->string('content');
+            $table->string('content');//コメント内容
             $table->timestamps();
             
             //外部キー設定

@@ -17,8 +17,8 @@ class CreateRecipesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
             $table->string('recipe_name');
-            $table->string('recipe_image1_url');
-            $table->string('recipe_image2_url');
+            $table->string('recipe_image1_url')->nullable();
+            $table->string('recipe_image2_url')->nullable();
             $table->integer('genre');
             $table->integer('cooking_time');
             $table->BigInteger('ingredients');//20191209_bigintに修正

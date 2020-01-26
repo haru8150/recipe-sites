@@ -10,19 +10,16 @@
             
             {!! Form::open(['route' => 'login.post']) !!}
                 <div class="form-group">
-                    {!! Form::label('email','Email') !!}
-                    {!! Form::email('email',old('email'), ['class' => 'form-control']) !!}
-                </div>
-                
-                <div class="form-group">
-                    {!! Form::label('password','Password') !!}
-                    {!! Form::password('password',['class' => 'form-control']) !!}
+                    <!--{!! Form::label('email','Email') !!}-->
+                    {!! Form::email('email',old('email'), ['class' => 'form-control', 'placeholder' => 'email']) !!}
+                    {!! Form::password('password',['class' => 'form-control', 'placeholder' => 'password']) !!}
+
                 </div>
             
                 {!! Form::submit('ログイン', ['class' => 'btn btn-primary btn-block']) !!}
             {!! Form::close() !!}    
             
-            <p class="mt-2">新規登録はこちらから{!! link_to_route('signup.get', '新規登録') !!}</p>
+            <p class="mt-2">新規登録は{!! link_to_route('signup.get', 'こちら') !!}から</p>
         </div>
     </div>
 @endsection
