@@ -99,20 +99,24 @@ class RecipesController extends Controller
                 //レシピ名であいまい検索した結果、自己投稿を含まないレシピをインスタンスに格納
                 $recipes = Recipe::where('recipe_name', 'LIKE', '%' .$keyWord.'%')
                 ->whereNotIn('user_id', [\Auth::id()])//カッコつき（配列）にして修正
-                ->paginate(5);
+                ->orderBy('created_at', 'desc')
+                ->paginate(6);
                 // dd($recipes);
                 }
                 else
                 {
                 //レシピ名であいまい検索した結果を格納
-                $recipes = Recipe::where('recipe_name', 'LIKE', '%' .$keyWord.'%')->paginate(5);
+                $recipes = Recipe::where('recipe_name', 'LIKE', '%' .$keyWord.'%')
+                ->orderBy('created_at', 'desc')
+                ->paginate(6);
                 //↑これだけreturnで返す、ほかの処理はindexでやる
                 }
             }
             else
             {
                 //検索フォーム未入力であれば、すべてのレシピを格納
-                $recipes = Recipe::paginate(5);
+                $recipes = Recipe::orderBy('created_at', 'desc')
+                ->paginate(6);
 
             }
 
@@ -135,11 +139,12 @@ class RecipesController extends Controller
             }
             */
             //日付の変換処理
-            foreach($recipes as $recipe){
-                $date = date_create($recipe->created_at);
-                $date = date_format($date, 'Y-m-d');
-                $recipe->created_at = $date;
-            }
+            // foreach($recipes as $recipe){
+            //     // $date = date_create($recipe->created_at);
+            //     // $date = date_format($date, 'Y-m-d');
+            //     $recipe->created_at->format('Y-m-d');
+            //     // $recipe->created_at = $date;
+            // }
             // dd($recipe->created_at);
             //検索結果までをindex()に返す
             return $recipes;
@@ -430,6 +435,14 @@ class RecipesController extends Controller
      //deleteでrecipes/idにアクセスされた場合の「削除処理」
     public function destroy($id)
     {
-        //
+        
+        $recipe = Recipe::find($id);
+        
+        // ログインユーザーとレシピ投稿者のIDが一致したときのみ削除
+        if(\Auth::id() === $recipe->user_id){
+            $recipe->delete();
+        }
+        //トップページに戻る
+        return redirect('/');
     }
 }

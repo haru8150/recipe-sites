@@ -1,6 +1,60 @@
 <!--共通レイアウトの呼び出し-->
 @extends('layouts.app')
 
+<!--@yield('script')の中身-->
+@section('script')
+    <script>
+        $(function(){
+            $(".btn-index").click(function(){
+               if(confirm("一覧に戻りますか？")){
+                    //一覧に戻る   
+               }else{
+                   //キャンセルする
+                   return false;
+               } 
+            });
+        });
+        
+        $(function(){
+            $(".btn-delete").click(function(){
+               if(confirm("本当に削除しますか？")){
+                    //一覧に戻る   
+               }else{
+                   //キャンセルする
+                   return false;
+               } 
+            });
+        });
+    </script>
+@endsection
+
+<!--@yield('script')の中身-->
+@section('script')
+    <script>
+        $(function(){
+            $(".btn-index").click(function(){
+               if(confirm("一覧に戻りますか？")){
+                    //一覧に戻る   
+               }else{
+                   //キャンセルする
+                   return false;
+               } 
+            });
+        });
+        
+        $(function(){
+            $(".btn-delete").click(function(){
+               if(confirm("本当に削除しますか？")){
+                    //一覧に戻る   
+               }else{
+                   //キャンセルする
+                   return false;
+               } 
+            });
+        });
+    </script>
+@endsection
+
 <!--@yield('content')の中身-->
 @section('content')
 <div class="center">
@@ -68,10 +122,19 @@
                 
             {!! Form::close() !!}
             
-            {!! Form::model($recipe, ['route' => ['recipes.index']]) !!}
-                {!! Form::submit('一覧に戻る', ['class' => 'btn btn-secondary ml-4']) !!}
-            {!! Form::close() !!}
-
+            <!--レシピの削除ボタン-->
+            <div>
+                @if(Auth::id() == $recipe->user_id)
+                    {!! Form::open(['route' => ['recipes_detail.destroy', $recipe->id], 'method' => 'delete']) !!}
+                        {!! Form::submit('削除', ['class' => 'btn btn-danger btn-delete float-left']) !!}
+                    {!! Form::close() !!}
+                @endif
+            </div>
+            <div>
+                {!! Form::model($recipe, ['route' => ['recipes.index']]) !!}
+                    {!! Form::submit('一覧に戻る', ['class' => 'btn btn-secondary btn-index ml-4']) !!}
+                {!! Form::close() !!}
+            </div>
         </div>
     </div>
 </div>

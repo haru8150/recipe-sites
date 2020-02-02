@@ -56,13 +56,12 @@ class Controller extends BaseController
     {
         //Userモデルのfavorites()メソッドから一覧数をカウント
         $count_favorites = $recipes->favorite_users()->count();
-
-        // $count_favorites = $recipes->favorite_users()->count();
+        $count_goods = $recipes->good_users()->count();
         // dd($count_favorites);
 
         return [
             'count_favorites' => $count_favorites,
-            // 'count_goods' => $count_goods,
+            'count_goods' => $count_goods,
         ];
     }
 }

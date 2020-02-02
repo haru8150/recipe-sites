@@ -78,7 +78,7 @@ class Recipe extends Model
     
         return \Storage::disk('s3')->url($this->recipe_image2_url);
     }
-    
+    //PHPの論理積　ビット演算　DBの値 & 人参の値 == trueであれば　"にんじん、"を付与　材料の定義文だけ条件文を作る
     //材料の表示処理
     public function recipe_ingredients(){
         

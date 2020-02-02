@@ -1,6 +1,8 @@
 <header class="mb-4">
     <nav class="navbar navbar-expand-sm navbar-light bg-light border-bottom">
-
+        <!-- ホームへ戻るリンク。ロゴ置く。 -->
+        <a class="navbar-brand text-warning" href="/">時短レシピサイト</a>
+        
         <!-- 横幅が狭い時に出るハンバーガーボタン -->
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
             <span class="navbar-toggler-icon"></span>
@@ -10,8 +12,6 @@
         <div class="collapse navbar-collapse form-inline pr-4" id="nav-bar">
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
-            <!-- ホームへ戻るリンク。ロゴ置く。 -->
-            <a class="navbar-brand text-warning" href="/">時短レシピサイト</a>
                 <div class="form-group">
                     <!--<li class="nav-item"><a href="#" class="nav-link">ランキング</a></li>-->
                     <!--<li class="nav-item dropdown">-->

@@ -1,23 +1,47 @@
 <!--共通レイアウトの呼び出し-->
 @extends('layouts.app')
 
+<!--@yield('script')の中身-->
+@section('script')
+    <script>
+        $(function(){
+            // ドロップダウンリストをクリックしたら
+            $(".dropdown-menu .dropdown-item").click(function(){
+                // button.dropdown-toggleを取得
+                var visibleItem = $(".dropdown-toggle", $(this).closest(".dropdown"));
+                
+                // button.dropdown-itemを取得し、valueの値（新着順 or いいね順 ）を取得する
+                visibleItem.text($(this).attr("value"));
+            });
+        });
+    </script>
+@endsection
 <!--@yield('content')の中身-->
 @section('content')
-    <div class="center">
+    <div class="center bg-test">
         <div class="text-center">
             <h1>ようこそ、時短レシピサイトへ！</h1>
             <hr>
             <h2>レシピ一覧　{{ $count_recipes }}件</h2>
                 <!--レシピ一覧の選択肢（デフォルトは新着順）-->
-                <div class="dropdown">
-                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                        新着順
-                    </button>
-                    <!--<div class="dropdown-menu">-->
-                    <!--    <a class="dropdown-item" href="#">いいね順</a>-->
-                    <!--</div>-->
-                </div>
-                
+            <!--<div class="dropdown">-->
+            <!--    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">-->
+            <!--        新着順-->
+            <!--    </button>-->
+            <!--    <div class="dropdown-menu">-->
+            <!--        <a class="dropdown-item" href="#">いいね順</a>-->
+            <!--    </div>-->
+            <!--</div>                <div class="dropdown">-->
+            <!--    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">-->
+            <!--        表示の順番-->
+            <!--    </button>-->
+            <!--    <div class="dropdown-menu">-->
+            <!--        <li><button class="dropdown-item" href="#" value="新着順">新着順</button></li>-->
+                    <!--「いいね順」はランキングテーブルから集計？-->
+            <!--        <li><button class="dropdown-item" href="#" value="いいね順">いいね順</button></li>-->
+                    <!--<a class="dropdown-item" href="#">いいね順</a>-->
+            <!--    </div>-->
+            <!--</div>-->
         </div>
         <div class="album py-5 bg-light">
             <div class="container">
@@ -36,7 +60,8 @@
                                                     {!! link_to_route('recipes.show', $recipe->recipe_name, ['id' => $recipe->id]) !!}
                                                 </p>
                                                 <label class="font-weight-bold"></label>
-                                                {{ $recipe->created_at}}</p>
+                                                <!--年月日まで表示する-->
+                                                {{ $recipe->created_at->format('Y-m-d') }}</p>
                                                 <p><span>調理時間：</span>{{ $recipe->recipe_cooking_time()}}</p>
                                                 <p><span>ジャンル：</span>{{ $recipe->recipe_genre()}}</p>
                                                 <p><span>材料：</span>{{ $recipe->recipe_ingredients()}}</p>
@@ -59,9 +84,7 @@
                     </div>
                 </div>
             </div>
-            
         </div>
-
     </div>
     {{ $recipes->appends(['keywords' => Request::get('keywords')])->links('pagination::bootstrap-4') }}
 @endsection
